@@ -93,4 +93,5 @@ cwd = os.path.dirname(os.path.realpath(__file__))
 - [ ] 1.按照规范、合适的方法重写
 - [ ] 2.完善logger和错误处理
 - [ ] 3.调整结构，让使用更为便捷
+- [ ] 4.增加模块热重载
 
