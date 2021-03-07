@@ -1,0 +1,6 @@
+baidu_aip==2.2.18.0
+requests==2.20.0
+PyMySQL==1.0.2
+Flask==1.1.2
+pytesseract==0.3.6
+Pillow==8.1.0

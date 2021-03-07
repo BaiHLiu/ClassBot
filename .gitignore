@@ -1,0 +1,6 @@
+go-cq/*
+__pycache__/
+.DS_Store
+res1.png
+res2.png
+test.py
