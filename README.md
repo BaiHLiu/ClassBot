@@ -6,6 +6,7 @@ A simple assistant for class clerk.
 ### ⚠️本项目仅供其他班长测试学习，其中包含巨多错误和不足。
 
 ## 目录结构说明
+```
 .
 ├── adminManager  [管理员配置模块]
 │   ├── __init__.py
@@ -32,6 +33,7 @@ A simple assistant for class clerk.
 │   └── register.py  [用户注册模块]
 ├── main.py  [Flask主程序]
 └── router.py  [消息路由]
+```
 
 ## 使用和配置
  1.修改./conf/botConf_default.json 为./conf/botConf.json
