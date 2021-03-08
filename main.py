@@ -3,7 +3,7 @@ Descripttion:
 version: 
 Author: Catop
 Date: 2021-02-10 07:47:09
-LastEditTime: 2021-03-07 13:57:04
+LastEditTime: 2021-03-08 13:14:14
 '''
 #coding:utf-8
 
@@ -11,6 +11,7 @@ LastEditTime: 2021-03-07 13:57:04
 import os
 import time
 import random
+import json
 from flask import Flask,request,jsonify
 
 from globalAPI import goapi as goapi
@@ -63,12 +64,20 @@ def getEvent():
     return data
 
 
-
-
-
 if __name__ == '__main__':
-    
-    app.run(host='127.0.0.1',port='5000',debug=True)
+    conf_info = "conf/botConf.json"
+    with open(conf_info,"r") as f:
+        conf_dict = json.load(f)
+    flask_host = conf_dict['Flask']['Host']
+    flask_port = conf_dict['Flask']['Port']
+    flask_debug = conf_dict['Flask']['Debug']
+    if flask_debug=="False":
+        flask_debug = False
+    else:
+        flask_debug = True
+
+        
+    app.run(host=flask_host,port=flask_port,debug=flask_debug)
     #send_alert('1038368144','信安20-2','group')
     #goapi.sendMsg('29242764','[CQ:image,file=file:/Users/catop/Desktop/ChangZhengBot/go-cq/res1.png]')
     #print(ocr_err_upload('29242764','信安20-2','2021-02-13'))
