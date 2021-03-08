@@ -3,7 +3,7 @@ Descripttion:
 version: 
 Author: Catop
 Date: 2021-02-10 07:47:09
-LastEditTime: 2021-03-08 13:14:14
+LastEditTime: 2021-03-08 22:15:44
 '''
 #coding:utf-8
 
@@ -40,9 +40,11 @@ def getEvent():
         elif(message_type=='group'):
             #处理群聊消息
             group_id = data.get('group_id')
+            
+            """
             CB_logger('Flask',f'接收群消息@{group_id}@{user_id}:{message[:20]}')
             CB_router(user_id,message,'group',group_id,sender=sender)
-            
+            """
 
             
     elif(post_type == 'request'):
