@@ -4,5 +4,10 @@
         "DBname": "qqbot",
         "UserName": "qqbot",
         "PassWord": ""
+    },
+
+    "gocq": {
+        "Address": "127.0.0.1",
+        "Port": ""
     }
 }

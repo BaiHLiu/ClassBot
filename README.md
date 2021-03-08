@@ -1,3 +1,10 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Catop
+ * @Date: 2021-03-08 12:51:21
+ * @LastEditTime: 2021-03-08 12:52:52
+-->
 # ClassBot
 A simple assistant for class clerk.
 
@@ -36,12 +43,12 @@ A simple assistant for class clerk.
 ```
 
 ## 使用和配置
-1.修改./conf/botConf_default.json 为./conf/botConf.json
-2.导入qqbot.sql，相关配置写入./conf/botConf.json
-3.启动go-cqhttp，注意修改Flask http参数和go-cq api参数。
+ 1.修改./conf/botConf_default.json 为./conf/botConf.json
+ 2.导入qqbot.sql，相关配置写入./conf/botConf.json
+ 3.启动go-cqhttp，注意修改Flask http参数和go-cq api参数。
 
 ## 功能开发注意
-** 当然这只是本菜鸡为了快速上功能而约定的，如果有不合适的地方请调整后pr即可。 **
+**当然这只是本菜鸡为了快速上功能而约定的，如果有不合适的地方请调整后pr即可。**
 
 以下内容以新增"classAlert"功能为例。
 
