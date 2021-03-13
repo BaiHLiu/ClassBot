@@ -3,7 +3,7 @@ Descripttion: 全局数据库调用
 version: 
 Author: Catop
 Date: 2021-03-06 12:23:03
-LastEditTime: 2021-03-07 13:46:00
+LastEditTime: 2021-03-13 23:24:28
 '''
 #coding:utf-8
 import os
@@ -133,7 +133,15 @@ def get_class_members(user_class):
         class_menbers.append(sql_ret[i]['user_id'])
     return class_menbers
 
+def add_user_count(user_id):
+    cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+    sql = "UPDATE userinfo SET user_count=user_count+1 WHERE user_id=%s LIMIT 1"
+    params = [user_id]
+    conn.ping(reconnect=True)
+    cursor.execute(sql,params)
+    conn.commit()
 
 if __name__ == "__main__":
     print(add_cmd('601179193','test1111111'))
     print(check_cmd('601179193'))
+    add_user_count('601179193')

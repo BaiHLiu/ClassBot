@@ -3,7 +3,7 @@ Descripttion:
 version: 
 Author: Catop
 Date: 2021-02-28 08:57:49
-LastEditTime: 2021-03-07 14:39:30
+LastEditTime: 2021-03-13 23:25:57
 '''
 import os
 import sys
@@ -162,6 +162,7 @@ def send_alert(group_id,user_class,type='private'):
         else:
             if(str(last_date)!=str(current_date)):
                 alert_users[user_id] = str(last_date)[5:]
+                globalDB.add_user_count(user_id)
     
     #print(alert_users)
     msg = f"今天还有{len(alert_users)}位小可爱未完成哦\n"
