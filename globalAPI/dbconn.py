@@ -71,9 +71,9 @@ def check_register(user_id):
 
 
 def get_user(user_id):
-    """获取用户姓名和班级"""
+    """获取用户信息"""
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-    sql = f"SELECT user_name,user_class FROM userinfo WHERE user_id={user_id} LIMIT 1"
+    sql = f"SELECT * FROM userinfo WHERE user_id={user_id} LIMIT 1"
     conn.ping(reconnect=True)
     cursor.execute(sql)
     user_info = cursor.fetchone()
@@ -142,6 +142,7 @@ def add_user_count(user_id):
     conn.commit()
 
 if __name__ == "__main__":
-    print(add_cmd('601179193','test1111111'))
-    print(check_cmd('601179193'))
-    add_user_count('601179193')
+    #print(add_cmd('601179193','test1111111'))
+    #print(check_cmd('601179193'))
+    #add_user_count('2865910529')
+    print(get_user('601179193'))

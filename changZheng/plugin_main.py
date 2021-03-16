@@ -162,7 +162,7 @@ def send_alert(group_id,user_class,type='private'):
         else:
             if(str(last_date)!=str(current_date)):
                 alert_users[user_id] = str(last_date)[5:]
-                globalDB.add_user_count(user_id)
+                
     
     #print(alert_users)
     msg = f"今天还有{len(alert_users)}位小可爱未完成哦\n"
@@ -171,13 +171,16 @@ def send_alert(group_id,user_class,type='private'):
     if(type=='private'):
         for user_id in alert_users.keys():
             last_date = alert_users[user_id]
-            msg += f"{globalDB.get_user(user_id)['user_name']}({alert_users[user_id]})\n"
+            msg += f"{globalDB.get_user(user_id)['user_name']}({alert_users[user_id]})"
+            msg += f"{globalDB.get_user(user_id)['user_count']}\n"
         msg+=f"{user_class} {current_date}\n完成情况:{len(group_menbers)-len(alert_users)}/{len(group_menbers)}"
         goapi.sendMsg(group_id,msg)
     elif(type=='group'):
         for user_id in alert_users.keys():
+            globalDB.add_user_count(str(user_id))
             last_date = alert_users[user_id]
-            msg += f"[CQ:at,qq={user_id}]({alert_users[user_id]})\n"
+            msg += f"[CQ:at,qq={user_id}]({alert_users[user_id]})-"
+            msg += f"{globalDB.get_user(user_id)['user_count']}\n"
         msg += f"{user_class} {current_date}\n完成情况:{len(group_menbers)-len(alert_users)}/{len(group_menbers)}"
         goapi.sendGroupMsg(group_id,msg)
     
@@ -185,7 +188,8 @@ def list_class_menbers(user_id,user_class):
     msg = f"{user_class}成员情况：\n"
     ret = globalDB.get_class_members(user_class)
     for i in range(0,len(ret)):
-        msg += f"{ret[i]} {globalDB.get_user(str(ret[i]))['user_name']}\n"
+        msg += f"{ret[i]} {globalDB.get_user(str(ret[i]))['user_name']} "
+        msg += f"{globalDB.get_user(str(ret[i]))['user_count']}\n"
     msg += f"共计{str(len(ret))}人"
 
     goapi.sendMsg(user_id,msg)

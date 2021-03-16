@@ -61,12 +61,13 @@ def dis_plugins(user_id,message):
     elif(1==2):
         pass
     else:
-        msg = "您要做什么呢？请先输入指令序号(纯数字)，目前支持的指令有:\n"
-        for i in range(0,len(user_cmd)):
-            msg += f"{i}:{user_cmd[i]}\n"
+        if not ('/alert' in message):
+            msg = "您要做什么呢？请先输入指令序号(纯数字)，目前支持的指令有:\n"
+            for i in range(0,len(user_cmd)):
+                msg += f"{i}:{user_cmd[i]}\n"
+            
+            goapi.sendMsg(user_id,msg)
         
-        goapi.sendMsg(user_id,msg)
-    
     #清空指令
     dbconn.add_cmd(user_id,"")
 
