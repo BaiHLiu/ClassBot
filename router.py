@@ -34,17 +34,17 @@ def CB_router(user_id,message,message_type,group_id=0,raw=False,sub_type='',mess
         return
 
 
-    #将用户指令写入数据库
-    if(message.isdigit()):
-        if(int(message)>=0 and int(message)<=len(user_cmd)-1):
-            message = user_cmd[int(message)]
+    # #将用户指令写入数据库
+    # if(message.isdigit()):
+    #     if(int(message)>=0 and int(message)<=len(user_cmd)-1):
+    #         message = user_cmd[int(message)]
             
-            dbconn.add_cmd(user_id,message)
-            goapi.sendMsg(user_id,message+" 开始~")
-        else:
-            goapi.sendMsg(user_id,"指令有误，请检查")
+    #         dbconn.add_cmd(user_id,message)
+    #         goapi.sendMsg(user_id,message+" 开始~")
+    #     else:
+    #         goapi.sendMsg(user_id,"指令有误，请检查")
 
-        return
+    #     return
 
     #分发指令(distribute to plugins)
     dis_plugins(user_id,message)
@@ -54,24 +54,27 @@ def CB_router(user_id,message,message_type,group_id=0,raw=False,sub_type='',mess
 
 
 def dis_plugins(user_id,message):
-    """读取上条命令，分发给不同插件"""
-    if(dbconn.check_cmd(user_id) == '截图上传'):
-        changZheng.readMsg(user_id,message)
-        dbconn.add_cmd(user_id,"")
-    elif(1==2):
-        pass
-    else:
-        if not ('/alert' in message):
-            msg = "您要做什么呢？请先输入指令序号(纯数字)，目前支持的指令有:\n"
-            for i in range(0,len(user_cmd)):
-                msg += f"{i}:{user_cmd[i]}\n"
+    # """读取上条命令，分发给不同插件"""
+    # if(dbconn.check_cmd(user_id) == '截图上传'):
+    #     changZheng.readMsg(user_id,message)
+    #     dbconn.add_cmd(user_id,"")
+    # elif(1==2):
+    #     pass
+    # else:
+    #     if not ('/alert' in message):
+    #         msg = "您要做什么呢？请先输入指令序号(纯数字)，目前支持的指令有:\n"
+    #         for i in range(0,len(user_cmd)):
+    #             msg += f"{i}:{user_cmd[i]}\n"
             
-            goapi.sendMsg(user_id,msg)
+    #         goapi.sendMsg(user_id,msg)
         
-    #清空指令
-    dbconn.add_cmd(user_id,"")
+    # #清空指令
+    # dbconn.add_cmd(user_id,"")
+    
+    if not ('/alert' in message):
+        changZheng.readMsg(user_id,message) #临时改为单功能
 
-    return
+    return 
 
 def sudo_act(user_id,message):
     if('/sudo' in message and (user_id=='601179193' or user_id=="29242764")):
