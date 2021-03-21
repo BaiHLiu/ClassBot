@@ -35,7 +35,9 @@ def CB_router(user_id,message,message_type,group_id=0,raw=False,sub_type='',mess
 
 
     # #将用户指令写入数据库
-    # if(message.isdigit()):
+    if(message.isdigit()):
+        goapi.sendMsg(user_id,'截图上传 开始')
+        
     #     if(int(message)>=0 and int(message)<=len(user_cmd)-1):
     #         message = user_cmd[int(message)]
             
