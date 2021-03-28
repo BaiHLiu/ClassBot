@@ -3,7 +3,7 @@ Descripttion:
 version: 
 Author: Catop
 Date: 2021-02-10 07:47:09
-LastEditTime: 2021-03-08 22:15:44
+LastEditTime: 2021-03-28 15:11:03
 '''
 #coding:utf-8
 
@@ -80,14 +80,3 @@ if __name__ == '__main__':
 
         
     app.run(host=flask_host,port=flask_port,debug=flask_debug)
-    #send_alert('1038368144','信安20-2','group')
-    #goapi.sendMsg('29242764','[CQ:image,file=file:/Users/catop/Desktop/ChangZhengBot/go-cq/res1.png]')
-    #print(ocr_err_upload('29242764','信安20-2','2021-02-13'))
-    #goapi.sendMsg('29242764','[CQ:image,file=file:/Users/catop/Desktop/ChangZhengBot/images/2021-02-13/信安20-2/信安20-2班-张宏远-20210213.jpg]')
-    #ocr_err_upload('601179193','信安20-2','2021-02-13')
-    #print(send_images_info('29242764','信安20-2'))
-    #print(show_admin())
-    #print(del_admin('1234567890'))
-    #goapi.sendMsg('601179193','123')
-    
-    

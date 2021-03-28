@@ -3,7 +3,7 @@ Descripttion: 全局数据库调用
 version: 
 Author: Catop
 Date: 2021-03-06 12:23:03
-LastEditTime: 2021-03-13 23:24:28
+LastEditTime: 2021-03-28 09:11:21
 '''
 #coding:utf-8
 import os
@@ -118,8 +118,8 @@ def re_register_user(user_id,user_name,user_class):
     return flag
 
 
-def get_class_members(user_class):
-    """获取班级成员QQ号list"""
+def get_class_members(user_class,type='user_id'):
+    """获取班级成员信息"""
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
     params = [user_class]
     sql = f"SELECT user_id FROM userinfo WHERE user_class=%s"
@@ -127,13 +127,19 @@ def get_class_members(user_class):
     cursor.execute(sql,params)
     sql_ret = cursor.fetchall()
     conn.commit()
-    class_menbers = []
 
-    for i in range(0,len(sql_ret)):
-        class_menbers.append(sql_ret[i]['user_id'])
-    return class_menbers
+    if(type == 'user_id'):
+        #仅qq号（确保旧版本兼容性）
+        class_menbers = []
+        for i in range(0,len(sql_ret)):
+            class_menbers.append(sql_ret[i]['user_id'])
+        return class_menbers
+    else:
+        #全部信息
+        return sql_ret
 
 def add_user_count(user_id):
+    """增加被提醒次数"""
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
     sql = "UPDATE userinfo SET user_count=user_count+1 WHERE user_id=%s LIMIT 1"
     params = [user_id]

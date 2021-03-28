@@ -3,14 +3,12 @@ Descripttion:
 version: 
 Author: Catop
 Date: 2021-02-28 08:57:49
-LastEditTime: 2021-03-13 23:25:57
+LastEditTime: 2021-03-27 20:32:57
 '''
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
-#添加当前目录
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-#添加上级目录
 
 import json
 import time

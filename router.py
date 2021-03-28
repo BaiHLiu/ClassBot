@@ -3,7 +3,7 @@ Descripttion: 路由消息，根据前缀/指令分发给不同插件
 version: 
 Author: Catop
 Date: 2021-03-06 12:21:07
-LastEditTime: 2021-03-07 14:46:10
+LastEditTime: 2021-03-28 14:45:49
 '''
 #coding:utf-8
 
@@ -12,6 +12,7 @@ from globalAPI import dbconn as dbconn
 from globalAPI import register as register
 from changZheng import plugin_main as changZheng
 from adminManager import adminConf as adminConf
+from classAlert import CA_main as classAlert
 
 #设置支持的指令
 user_cmd = ['截图上传']
@@ -32,6 +33,12 @@ def CB_router(user_id,message,message_type,group_id=0,raw=False,sub_type='',mess
     if('/sudo' in message):
         sudo_act(user_id,message)
         return
+
+    #alert功能管理员指令
+    if('/alert' in message):
+        classAlert.readMsg(user_id,message)
+        return
+
 
 
     #将用户指令写入数据库
@@ -55,21 +62,22 @@ def CB_router(user_id,message,message_type,group_id=0,raw=False,sub_type='',mess
 
 def dis_plugins(user_id,message):
     """读取上条命令，分发给不同插件"""
-    if(dbconn.check_cmd(user_id) == '截图上传'):
-        changZheng.readMsg(user_id,message)
-        dbconn.add_cmd(user_id,"")
-    elif(1==2):
-        pass
-    else:
-        if not ('/alert' in message):
-            msg = "您要做什么呢？请先输入指令序号(纯数字)，目前支持的指令有:\n"
-            for i in range(0,len(user_cmd)):
-                msg += f"{i}:{user_cmd[i]}\n"
-            
-            goapi.sendMsg(user_id,msg)
+    # if(dbconn.check_cmd(user_id) == '截图上传'):
+    #     changZheng.readMsg(user_id,message)
+    #     dbconn.add_cmd(user_id,"")
+    # elif(1==2):
+    #     pass
+    # else:
+    #     msg = "您要做什么呢？请先输入指令序号(纯数字)，目前支持的指令有:\n"
+    #     for i in range(0,len(user_cmd)):
+    #         msg += f"{i}:{user_cmd[i]}\n"
         
-    #清空指令
-    dbconn.add_cmd(user_id,"")
+    #     goapi.sendMsg(user_id,msg)
+        
+    # #清空指令
+    # dbconn.add_cmd(user_id,"")
+
+    changZheng.readMsg(user_id,message)
 
     return
 

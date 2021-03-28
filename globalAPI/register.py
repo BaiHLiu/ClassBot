@@ -3,7 +3,7 @@ Descripttion: 注册新用户
 version: 
 Author: Catop
 Date: 2021-03-07 13:47:18
-LastEditTime: 2021-03-07 13:59:58
+LastEditTime: 2021-03-28 15:19:21
 '''
 
 import os
@@ -18,7 +18,7 @@ import dbconn as globalDB
 def register_prompt(user_id,message):
     """用户注册逻辑"""
     if('注册' in message):
-        err_promot = '输入好像有点问题呢'
+        err_promot = '输入好像有点问题呢\n注册格式："注册@姓名@班级"'
         try:
             user_name = message.split('@')[1]
             user_class = message.split('@')[2]
