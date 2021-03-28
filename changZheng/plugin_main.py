@@ -122,13 +122,13 @@ def get_img(user_id,message):
             else:
                 print("图片无法识别:"+ocr_ret)
                 #图片识别接口返回无法识别
-                goapi.sendMsg(user_id,f"OCR无法识别，图片将人工复核~")
+                goapi.sendMsg(user_id,f"嘤！图片无法识别，可能是字体原因，图片将人工复核~")
                 dbconn.insert_img(user_id,file_name,upload_date,upload_time,'1','0','0')
                 return 
         except:
             #图片识别接口出错
             print("OCR接口出错:")
-            goapi.sendMsg(user_id,f"qwq图片识别接口出错了！图片将人工复核~")
+            goapi.sendMsg(user_id,f"嘤！图片无法识别，可能是字体原因，图片将人工复核~")
             dbconn.insert_img(user_id,file_name,upload_date,upload_time,'1','0','0')
         else:
             dbconn.insert_img(user_id,file_name,upload_date,upload_time,ocr_err_code,ocr_times,ocr_scores)
