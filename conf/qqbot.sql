@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2021-03-07 15:29:46
--- 服务器版本： 5.6.50-log
+-- 生成日期： 2021-03-28 16:36:11
+-- 服务器版本： 5.6.49-log
 -- PHP 版本： 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 数据库： `qqbot`
+-- 数据库： `qqbot_new`
 --
 
 -- --------------------------------------------------------
@@ -32,8 +32,9 @@ CREATE TABLE `CA_project` (
   `id` int(5) NOT NULL,
   `title` varchar(50) NOT NULL,
   `description` varchar(200) NOT NULL,
+  `user_class` varchar(30) NOT NULL,
   `date` date NOT NULL COMMENT '创建时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='班级事项提醒_项目信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -45,22 +46,9 @@ CREATE TABLE `CA_submit` (
   `sid` int(8) NOT NULL,
   `username` varchar(10) NOT NULL,
   `pid` int(11) NOT NULL COMMENT '项目id',
+  `file_name` varchar(30) NOT NULL,
   `stime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='班级事项提醒_提交记录';
-
--- --------------------------------------------------------
-
---
--- 表的结构 `CA_userinfo`
---
-
-CREATE TABLE `CA_userinfo` (
-  `uid` int(5) NOT NULL,
-  `user_id` varchar(12) NOT NULL COMMENT 'QQ号',
-  `user_name` varchar(20) NOT NULL,
-  `user_class` varchar(30) NOT NULL,
-  `alert_count` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='班级事项提醒_成员信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -92,7 +80,8 @@ CREATE TABLE `userinfo` (
   `user_class` varchar(30) NOT NULL,
   `last_cmd` varchar(50) NOT NULL COMMENT '最近一条命令',
   `last_upload_date` date NOT NULL,
-  `last_upload_time` time NOT NULL
+  `last_upload_time` time NOT NULL,
+  `user_count` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='注册用户信息';
 
 --
@@ -110,12 +99,6 @@ ALTER TABLE `CA_project`
 --
 ALTER TABLE `CA_submit`
   ADD PRIMARY KEY (`sid`);
-
---
--- 表的索引 `CA_userinfo`
---
-ALTER TABLE `CA_userinfo`
-  ADD PRIMARY KEY (`uid`);
 
 --
 -- 表的索引 `CZ_imginfo`
@@ -144,12 +127,6 @@ ALTER TABLE `CA_project`
 --
 ALTER TABLE `CA_submit`
   MODIFY `sid` int(8) NOT NULL AUTO_INCREMENT;
-
---
--- 使用表AUTO_INCREMENT `CA_userinfo`
---
-ALTER TABLE `CA_userinfo`
-  MODIFY `uid` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `CZ_imginfo`
