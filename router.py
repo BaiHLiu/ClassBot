@@ -13,6 +13,7 @@ from globalAPI import register as register
 from changZheng import plugin_main as changZheng
 from adminManager import adminConf as adminConf
 from classAlert import CA_main as classAlert
+from yiYan import wanan as wanan
 
 #设置支持的指令
 user_cmd = ['截图上传']
@@ -38,23 +39,34 @@ def CB_router(user_id,message,message_type,group_id=0,raw=False,sub_type='',mess
     if('/alert' in message):
         classAlert.readMsg(user_id,message)
         return
+    
+    #临时用：舔狗和彩虹屁
+    if(message_type == 'group'):
+        if('.舔狗' in message):
+            wanan.tiangou(group_id)
+            return
+        elif('.彩虹' in message):
+            wanan.caihongpi(group_id)
+            return
+        
 
 
 
     #将用户指令写入数据库
-    if(message.isdigit()):
-        if(int(message)>=0 and int(message)<=len(user_cmd)-1):
-            message = user_cmd[int(message)]
-            
-            dbconn.add_cmd(user_id,message)
-            goapi.sendMsg(user_id,message+" 开始~")
-        else:
-            goapi.sendMsg(user_id,"指令有误，请检查")
-
-        return
-
-    #分发指令(distribute to plugins)
-    dis_plugins(user_id,message)
+    if(message_type == 'private'):
+        if(message.isdigit()):
+            if(int(message)>=0 and int(message)<=len(user_cmd)-1):
+                message = user_cmd[int(message)]
+                
+                dbconn.add_cmd(user_id,message)
+                goapi.sendMsg(user_id,message+" 开始~")
+            else:
+                goapi.sendMsg(user_id,"指令有误，请检查")
+    
+            return
+    
+        #分发指令(distribute to plugins)
+        dis_plugins(user_id,message)
 
 
     return

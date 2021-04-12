@@ -41,10 +41,8 @@ def getEvent():
             #处理群聊消息
             group_id = data.get('group_id')
             
-            """
             CB_logger('Flask',f'接收群消息@{group_id}@{user_id}:{message[:20]}')
             CB_router(user_id,message,'group',group_id,sender=sender)
-            """
 
             
     elif(post_type == 'request'):
