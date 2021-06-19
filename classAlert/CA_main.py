@@ -58,12 +58,14 @@ def readMsg(user_id,message):
                 for uid in alert_list.keys():
                     try:
                         user_name = dbconn.get_user_by_id(uid)['user_name']
-                        goapi.sendMsg(uid,f"{user_name}您好,请及时完成{title}\n点击确认:{url}")
+                        ####连续发送多条带链接私聊消息可能会被风控
+                        goapi.sendMsg(uid,f"亲爱的{user_name},不好意思打扰一下，请及时完成{title}\n点击确认:{url}")
+                        #goapi.sendMsg(uid,f"{user_name}您好,请及时完成{title}\n，完成后点击链接确认。（连续发送多条带链接私聊消息可能会被风控，请自行查阅管理员创建的链接）")
                     except:
                         err_list.append(str(uid))
 
                     dbconn.unset_count(uid)
-                    time.sleep(random.randint(1,2))
+                    time.sleep(random.randint(2,3))
 
                 goapi.sendMsg(user_id,f"已发送私聊消息{len(alert_list.keys())}条，失败{len(err_list)}条\n失败名单:{err_list}")
             elif('统计' in message):

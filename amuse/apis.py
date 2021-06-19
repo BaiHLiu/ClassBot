@@ -1,9 +1,9 @@
 '''
-Descripttion: 
+Descripttion: 一言API，全部返回纯文本，调用时请自行处理错误
 version: 
 Author: Catop
-Date: 2021-04-11 23:08:09
-LastEditTime: 2021-04-11 23:45:03
+Date: 2021-04-11 23:38:52
+LastEditTime: 2021-06-19 13:36:17
 '''
 
 import os
@@ -14,41 +14,72 @@ import requests
 import json
 import time
 
-import globalAPI.goapi as goapi
 
 
-def wanan():
-    cq_code = f'[CQ:image,file={english_img()}]'
-    text = f'今天辛苦了❤\n时间不早了，赶快休息吧~\n{cq_code}'
-    
-    #goapi.sendMsg('601179193',cq_code)
-    #goapi.sendMsg('601179193',text)
-    goapi.sendGroupMsg('949773437',text)
 
-    goapi.sendGroupMsg('515192555',text)
-    
-
-
-def history_today():
-    url = 'http://api.tianapi.com/txapi/lishi/index'
+def get_wenyanwen():
+    """获取文言文"""
+    url = 'http://api.tianapi.com/txapi/lzmy/index'
     params = {'key':'ce9683fb3b39fb211a0834c09165c599'}
+
     res = requests.get(url,params=params)
     res_dict = json.loads(res.text)
 
     if(res_dict['code'] == 200):
         content = res_dict['newslist'][0]
-        return content['lsdate']+' '+content['title']
+        text = content['saying']+'\n'+content['transl']+' ——'+content['source']
+
+
+    return text
+
+
+def getBingImg():
+    """获取必应每日一图"""
+    url = 'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'
+
+    res = requests.get(url)
+    res_dict = json.loads(res.text)
+    img_url = 'https://cn.bing.com' + res_dict['images'][0]['url']
+    img_cpright = res_dict['images'][0]['copyright']
+    
+    text = f'[CQ:image,file={img_url}]\n——{img_cpright}'
+    
+    return text
+
+
+def get_history_today():
+    """获取历史上的今天"""
+    url = 'http://api.tianapi.com/txapi/lishi/index'
+    params = {'key':'ce9683fb3b39fb211a0834c09165c599'}
+    res = requests.get(url,params=params)
+    res_dict = json.loads(res.text)
+
+    text = ""
+    if(res_dict['code'] == 200):
+        content = res_dict['newslist'][-1]
+        text = content['lsdate']+' '+content['title']
+    
+    return text
 
 def english_img():
+    """获取金山词霸英语每日一图"""
     url = 'http://api.tianapi.com/txapi/everyday/index'
     params = {'key':'ce9683fb3b39fb211a0834c09165c599'}
     res = requests.get(url,params=params)
     res_dict = json.loads(res.text)
 
+    text = ""
     if(res_dict['code'] == 200):
-        return res_dict['newslist'][0]['imgurl']
+        image_url =  res_dict['newslist'][0]['imgurl']
+        text = f"[CQ:image,file={image_url}]"
+        
+
+    
+    return text
+
 
 def get_wyy():
+    """获取网易云热评"""
     url = 'https://v1.hitokoto.cn'
     params = {'c':'j'}
     res = requests.get(url,params=params)
@@ -61,39 +92,34 @@ def get_wyy():
 
 
 def tiangou(user_id,type='group'):
+    """获取舔狗"""
     url = 'http://api.tianapi.com/txapi/tiangou/index'
     params = {'key':'ce9683fb3b39fb211a0834c09165c599'}
     res = requests.get(url,params=params)
     res_dict = json.loads(res.text)
 
+    text = ""
     if(res_dict['code'] == 200):
         text = res_dict['newslist'][0]['content']
-        if(type=='group'):
-            goapi.sendGroupMsg(user_id,text)
-        elif(type=='private'):
-            goapi.sendMsg(user_id,text)
-            
-            
+    
+    return text
+
+
 def caihongpi(user_id,type='group'):
+    """获取彩虹屁"""
     url = 'http://api.tianapi.com/txapi/caihongpi/index'
     params = {'key':'ce9683fb3b39fb211a0834c09165c599'}
     res = requests.get(url,params=params)
     res_dict = json.loads(res.text)
 
+    text = ""
     if(res_dict['code'] == 200):
         text = res_dict['newslist'][0]['content']
-        if(type=='group'):
-            goapi.sendGroupMsg(user_id,text)
-        elif(type=='private'):
-            goapi.sendMsg(user_id,text)
     
+    return text
+        
 
-if __name__  == '__main__':
-    #print(zaoan())
-    #print(history_today())
-    #print(english_img())
-    #print(get_wyy())
-    #print(wanan())
-    #wanan()
-    #tiangou('601179193','private')
-    caihongpi('601179193','private')
+
+#DEBUG
+if __name__ == '__main__':
+    print(get_history_today())

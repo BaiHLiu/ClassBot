@@ -13,7 +13,7 @@ from globalAPI import register as register
 from changZheng import plugin_main as changZheng
 from adminManager import adminConf as adminConf
 from classAlert import CA_main as classAlert
-from yiYan import wanan as wanan
+from yiYan import wanan_new as wanan
 
 #设置支持的指令
 user_cmd = ['截图上传']
