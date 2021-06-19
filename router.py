@@ -3,27 +3,31 @@ Descripttion: 路由消息，根据前缀/指令分发给不同插件
 version: 
 Author: Catop
 Date: 2021-03-06 12:21:07
-LastEditTime: 2021-03-28 14:45:49
+LastEditTime: 2021-06-19 16:47:30
 '''
 #coding:utf-8
-
-from globalAPI import goapi as goapi
+from globalAPI import CB_logger as logger
+from globalAPI import goapi 
 from globalAPI import dbconn as dbconn
 from globalAPI import register as register
 from changZheng import plugin_main as changZheng
 from adminManager import adminConf as adminConf
 from classAlert import CA_main as classAlert
-from yiYan import wanan_new as wanan
+import amuseActive
 
-#设置支持的指令
-user_cmd = ['截图上传']
+###########################################
+#无前缀主动命令响应
+PERMIT_AUTO_QID = [159972680,441264425,1091802120]
+
+###########################################
+
 
 def CB_router(user_id,message,message_type,group_id=0,raw=False,sub_type='',message_id=0,sender=[]):
     """路由message事件"""
-    #检查是否为注册用户
-    if not(dbconn.check_register(user_id)) and not('注册' in message):
-        goapi.sendMsg(user_id,'您还没注册呢，请回复指令注册\n例如"注册@张三@信安20-2"\n(班级请严格按格式输入，否则可能统计不上哦)')
-        return
+    #检查是否为注册用户(已弃用)
+    # if not(dbconn.check_register(user_id)) and not('注册' in message):
+    #     goapi.sendMsg(user_id,'您还没注册呢，请回复指令注册\n例如"注册@张三@信安20-2"\n(班级请严格按格式输入，否则可能统计不上哦)')
+    #     return
     
     #响应任何用户的响应注册指令
     if('注册' in message):
@@ -40,30 +44,40 @@ def CB_router(user_id,message,message_type,group_id=0,raw=False,sub_type='',mess
         classAlert.readMsg(user_id,message)
         return
     
-    #临时用：舔狗和彩虹屁
-    if(message_type == 'group'):
-        if('.舔狗' in message):
-            wanan.tiangou(group_id)
-            return
-        elif('.彩虹' in message):
-            wanan.caihongpi(group_id)
-            return
-        
+    #主动娱乐插件，以#开头
+    if(message[0] == '#'):
+        if(message_type == 'private'):
+            amuseActive.controller.amuseRouter(message,user_id,'private',message_id)
+        elif(message_type == 'group'):
+            amuseActive.controller.amuseRouter(message,group_id,'group',message_id)
 
+        return
 
-
-    #将用户指令写入数据库
-    if(message_type == 'private'):
-        if(message.isdigit()):
-            if(int(message)>=0 and int(message)<=len(user_cmd)-1):
-                message = user_cmd[int(message)]
-                
-                dbconn.add_cmd(user_id,message)
-                goapi.sendMsg(user_id,message+" 开始~")
-            else:
-                goapi.sendMsg(user_id,"指令有误，请检查")
     
-            return
+    #无命令主动响应事件，需配置PERMIT_AUTO_QID
+    if(user_id in PERMIT_AUTO_QID )or (group_id in PERMIT_AUTO_QID):
+        #响应图片
+        logger.plog('router','触发无命令图片响应')
+        if(message[0:4] == '[CQ:'):
+            if(message_type == 'private'):
+                amuseActive.imgrec.handler(message, user_id, message_type, message_id)
+            elif(message_type == 'group'):
+                amuseActive.imgrec.handler(message, group_id, message_type, message_id)
+
+        return
+
+    # #将用户指令写入数据库
+    # if(message_type == 'private'):
+    #     if(message.isdigit()):
+    #         if(int(message)>=0 and int(message)<=len(user_cmd)-1):
+    #             message = user_cmd[int(message)]
+                
+    #             dbconn.add_cmd(user_id,message)
+    #             goapi.sendMsg(user_id,message+" 开始~")
+    #         else:
+    #             goapi.sendMsg(user_id,"指令有误，请检查")
+    
+    #         return
     
         #分发指令(distribute to plugins)
         dis_plugins(user_id,message)
@@ -73,25 +87,12 @@ def CB_router(user_id,message,message_type,group_id=0,raw=False,sub_type='',mess
 
 
 def dis_plugins(user_id,message):
-    """读取上条命令，分发给不同插件"""
-    # if(dbconn.check_cmd(user_id) == '截图上传'):
-    #     changZheng.readMsg(user_id,message)
-    #     dbconn.add_cmd(user_id,"")
-    # elif(1==2):
-    #     pass
-    # else:
-    #     msg = "您要做什么呢？请先输入指令序号(纯数字)，目前支持的指令有:\n"
-    #     for i in range(0,len(user_cmd)):
-    #         msg += f"{i}:{user_cmd[i]}\n"
-        
-    #     goapi.sendMsg(user_id,msg)
-        
-    # #清空指令
-    # dbconn.add_cmd(user_id,"")
+    """长征路截图上传机器人，已弃用"""
 
-    changZheng.readMsg(user_id,message)
-
-    return
+    #changZheng.readMsg(user_id,message)
+    
+    pass
+    
 
 def sudo_act(user_id,message):
     if('/sudo' in message and (user_id=='601179193' or user_id=="29242764")):

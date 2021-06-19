@@ -3,16 +3,16 @@ Descripttion:
 version: 
 Author: Catop
 Date: 2021-03-07 12:49:27
-LastEditTime: 2021-03-07 13:27:36
+LastEditTime: 2021-06-19 14:12:30
 '''
 import time
 
 
 def plog(src,message,type='info'):
     """
-    [INFO]普通信息
-    [WARNING]警告
-    [ERROR]错误
+    [info]普通信息(默认)
+    [warning]警告
+    [error]错误
     """
     ctime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     logmsg = ""

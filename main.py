@@ -3,7 +3,7 @@ Descripttion:
 version: 
 Author: Catop
 Date: 2021-02-10 07:47:09
-LastEditTime: 2021-03-28 15:11:03
+LastEditTime: 2021-06-19 16:34:27
 '''
 #coding:utf-8
 
@@ -30,19 +30,20 @@ def getEvent():
     if(post_type == 'message'):
         message_type = data.get('message_type')
         message = data.get('message')
+        message_id = data.get('message_id')
         user_id = str(data.get('user_id'))
         sender = data.get('sender')
         #sender为dict
         if(message_type=='private'):
             #处理私聊消息
             CB_logger('Flask',f'接收私聊消息@{user_id}:{message[:20]}')
-            CB_router(user_id,message,'private',sender=sender)
+            CB_router(user_id,message,'private',sender=sender,message_id=message_id)
         elif(message_type=='group'):
             #处理群聊消息
             group_id = data.get('group_id')
             
             CB_logger('Flask',f'接收群消息@{group_id}@{user_id}:{message[:20]}')
-            CB_router(user_id,message,'group',group_id,sender=sender)
+            CB_router(user_id,message,'group',group_id,sender=sender,message_id=message_id)
 
             
     elif(post_type == 'request'):

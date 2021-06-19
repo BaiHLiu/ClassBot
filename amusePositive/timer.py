@@ -2,13 +2,12 @@
 Description: 每日一言定时器
 Author: Catop
 Date: 2021-06-19 13:13:51
-LastEditTime: 2021-06-19 13:44:19
+LastEditTime: 2021-06-19 13:53:40
 '''
 
 import os
 import sys
 
-from requests import api
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
@@ -38,6 +37,6 @@ def timer_task():
         for groupId in group_list1:
             goapi.sendGroupMsg(groupId,"时间不早啦，赶快休息吧。\n"+apis.getBingImg())
 
-
+#timer run
 if __name__ == "__main__":
     timer_task()

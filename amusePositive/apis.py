@@ -3,7 +3,7 @@ Descripttion: 一言API，全部返回纯文本，调用时请自行处理错误
 version: 
 Author: Catop
 Date: 2021-04-11 23:38:52
-LastEditTime: 2021-06-19 13:36:17
+LastEditTime: 2021-06-19 14:36:15
 '''
 
 import os
@@ -78,31 +78,6 @@ def english_img():
     return text
 
 
-def get_wyy():
-    """获取网易云热评"""
-    url = 'https://v1.hitokoto.cn'
-    params = {'c':'j'}
-    res = requests.get(url,params=params)
-    res_dict = json.loads(res.text)
-
-    if(res_dict['from']):
-        return res_dict['hitokoto']+'——'+res_dict['from']
-    else:
-        return res_dict['hitokoto']
-
-
-def tiangou(user_id,type='group'):
-    """获取舔狗"""
-    url = 'http://api.tianapi.com/txapi/tiangou/index'
-    params = {'key':'ce9683fb3b39fb211a0834c09165c599'}
-    res = requests.get(url,params=params)
-    res_dict = json.loads(res.text)
-
-    text = ""
-    if(res_dict['code'] == 200):
-        text = res_dict['newslist'][0]['content']
-    
-    return text
 
 
 def caihongpi(user_id,type='group'):
