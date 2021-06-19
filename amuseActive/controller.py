@@ -2,7 +2,7 @@
 Description: 主动娱乐控制器，动态引入插件并调用其hander()函数
 Author: Catop
 Date: 2021-06-19 13:53:26
-LastEditTime: 2021-06-19 16:11:39
+LastEditTime: 2021-06-19 16:55:27
 '''
 
 import os
@@ -28,6 +28,15 @@ ENABLED_PLUGINS = ['tiangou','wyy','imgrec']
 
 def amuseRouter(message, qid, type, message_id):
     """娱乐插件路由"""
+    if('#help' in message):
+        if(type == 'private'):
+            goapi.sendMsg(qid,f"当前支持娱乐功能：{ENABLED_PLUGINS}")
+        else:
+            goapi.sendGroupMsg(qid,f"当前支持娱乐功能：{ENABLED_PLUGINS}")
+        return
+    
+    
+
     if(qid in DISABLE_GROUP) or (qid in DISABLE_FRIEND):
         if(type == 'private'):
             goapi.sendMsg(qid,"抱歉，您暂无此权限")

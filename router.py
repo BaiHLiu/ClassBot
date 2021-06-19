@@ -3,7 +3,7 @@ Descripttion: 路由消息，根据前缀/指令分发给不同插件
 version: 
 Author: Catop
 Date: 2021-03-06 12:21:07
-LastEditTime: 2021-06-19 16:47:30
+LastEditTime: 2021-06-19 16:58:38
 '''
 #coding:utf-8
 from globalAPI import CB_logger as logger
@@ -55,7 +55,7 @@ def CB_router(user_id,message,message_type,group_id=0,raw=False,sub_type='',mess
 
     
     #无命令主动响应事件，需配置PERMIT_AUTO_QID
-    if(user_id in PERMIT_AUTO_QID )or (group_id in PERMIT_AUTO_QID):
+    if(user_id in PERMIT_AUTO_QID )or (group_id in PERMIT_AUTO_QID) or (message_type == 'private'):
         #响应图片
         logger.plog('router','触发无命令图片响应')
         if(message[0:4] == '[CQ:'):
